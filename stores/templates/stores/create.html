@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+<h2 class="mb-4">Warehouse Tool Profile</h2>
+<form method="POST" enctype="multipart/form-data" action="{% url 'stores:toolcreate' %}">
+    {% csrf_token %}
+    <div class="row ">
+        <!--Manual Input column-->
+        <div class="col">
+            <div class="bg-secondary rounded h-100 p-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                {{ form.item_name|add_class:"form-control"|attr:"id:item_name"|attr:"placeholder:John"|attr:"type:text" }}
+                                <label for="{{ form.item_name.id_for_label }}">Item Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                {{ form.manufacturer|add_class:"form-control"|attr:"id:manufacturer"|attr:"placeholder:Doe"|attr:"type:text" }}
+                                <label for="{{ form.manufacturer.id_for_label }}">Manufactuer</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-floating mb-3">
+                                {{ form.description|add_class:"form-control"|attr:"id:description"|attr:"placeholder:Doe"|attr:"type:textarea" }}
+                                <label for="{{ form.description.id_for_label }}">Description</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                {{ form.serial_number|add_class:"form-control"|attr:"id:serial_number"|attr:"placeholder:Doe"|attr:"type:text" }}
+                                <label for="{{ form.serial_number.id_for_label }}">Serial Number</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                        <!--Date Picker Date Joined-->
+                <div class="row">
+
+                    <!--Date Picker Date Of Birth-->
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+
+
+                <div class="row ms-1">
+                    <div class="col-md-6">
+                        <div class="form-check">
+
+                            {{ form.is_activate|add_class:"form-check-input"|attr:"id:is_activate" | attr:"type:checkbox" }}
+                            <label class="form-check-label" for="{{ form.is_activate.id_for_label }}">
+                                Is Active
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="">
+                        <button class="btn btn-lg btn-success m-2" type="submit">Submit Form</button>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+        </div>
+        <!--Profile Pic Column-->
+        <div class="col">
+            <div class="bg-secondary rounded h-100 p-2 avatar">
+                <div class="text-center">
+                    {% if form.item_photo.value %}
+                        <img src="{{ form.item_photo.value.url }}" class="mx-auto mb-4 w-32 rounded-lg" alt="Avatar" />
+                    {% else %}
+                        <img src="https://pngimg.com/uploads/drill/drill_PNG1.png" class="mb-4 w-32 rounded-lg" width="350" height="350" alt="Avatar" />
+                    {% endif %}
+                    <input type="file" name="item_photo" class="form-control" id="item_photo">
+                </div>
+            </div>
+        </div>
+        <!--QR Code column-->
+        <div class="col">
+            <div class="bg-secondary rounded h-100 p-2 avatar">
+                <div class="text-center">
+                    <img
+                        src="https://pngimg.com/uploads/qr_code/qr_code_PNG17.png"
+                        class="mx-auto mb-4 w-3 rounded-lg"
+                        alt="Avatar" width="250" height="250" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

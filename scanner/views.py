@@ -79,11 +79,7 @@ def userscannedView(request):
         return JsonResponse({"message": "Invalid request method"})
 
 class TimesheetModelListView(ListView):
-    model = UserModel
+    model = Timesheet
     template_name = 'scanner/timesheettable.html'
-    context_object_name = 'usermodels'
+    context_object_name = 'time_model'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['time_model'] = Timesheet.objects.all()
-        return context

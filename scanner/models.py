@@ -3,9 +3,12 @@ from employees.models import UserModel
 from stores.models import WarehouseModel
 from datetime import datetime
 import pytz
+from django.utils import timezone
+
 # Create your models here.
 class Timesheet(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    enter_date=models.DateField(default=timezone.now)
     enter_time = models.DateTimeField()
     leave_time = models.DateTimeField(null=True, blank=True)
     duration = models.DurationField(null=True, blank=True)

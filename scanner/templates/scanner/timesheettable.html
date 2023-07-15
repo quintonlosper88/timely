@@ -12,6 +12,7 @@
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">Employee ID</th>
+                        <th scope="col">Date</th>
                         <th scope="col">Start Time</th>
                         <th scope="col">End Time</th>
                         <th scope="col">Duration</th>
@@ -23,6 +24,7 @@
                     <td>{{ timesheet.user.firstName }}</td>
                     <td>{{ timesheet.user.lastName }}</td>
                     <td>{{ timesheet.user.employeeID }}</td>
+                    <td>{{ timesheet.enter_date }}</td>
                     <td>{{ timesheet.enter_time }}</td>
                     <td>{{ timesheet.leave_time }}</td>
                     <td>{{ timesheet.duration }}</td>
@@ -33,4 +35,5 @@
             </table>
         </div>
     </div>
+    <% //TODO: Add filter by user and date options %>
 {% endblock %}
