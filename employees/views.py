@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from .models import UserModel
 from .forms import UserForm
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView
+from django.views.generic import ListView,UpdateView
 from django.urls import reverse_lazy
 def index(request):
     return render(request, 'employees/index.html')
@@ -18,6 +18,24 @@ class UserModelListView(ListView):
     model = UserModel
     template_name = 'employees/table.html'
     context_object_name = 'usermodels'
+
+class UserModelUpdateView(UpdateView):
+    print("user update class based model called")
+    model = UserModel
+    template_name = 'employees/edit.html'
+    form_class = UserForm
+    success_url = reverse_lazy('employees:table')
+
+
+    def form_valid(self, form):
+        print("form_valid function called")
+        # Save the form instance and get the updated object
+        self.object = form.save()
+
+        # Perform any additional actions or logic here
+
+        return super().form_valid(form)
+
 
 class UserCreateView(CreateView):
     print("UserCreatEView Called")

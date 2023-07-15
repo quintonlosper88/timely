@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<h2 class="mb-4">Employee Table</h2>
+<h2 class="mb-4">Employee Database</h2>
     <div class="">
         <div class="bg-secondary rounded h-100 p-4">
 
@@ -24,7 +24,7 @@
                     <td>{{ usermodel.firstName }}</td>
                     <td>{{ usermodel.lastName }}</td>
                     <td>{{ usermodel.email }}</td>
-                    <td><a>{{ usermodel.employeeID }}</a></td>
+                    <td><a href="{% url 'employees:edit'  pk=usermodel.pk %}">{{ usermodel.employeeID }}</a></td>
                     <td>{{ usermodel.date_joined }}</td>
                     <td>{{ usermodel.job_title }}</td>
                     <td>{{ usermodel.phone_number }}</td>

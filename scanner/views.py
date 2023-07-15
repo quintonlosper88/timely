@@ -5,6 +5,7 @@ import json
 from .models import UserModel,Timesheet
 from django.utils import timezone
 from datetime import datetime
+from django.views.generic import ListView,UpdateView
 # Create your views here.
 def index(request):
     return render(request, 'scanner/index.html')
@@ -76,3 +77,13 @@ def userscannedView(request):
         return JsonResponse(response_data)
     else:
         return JsonResponse({"message": "Invalid request method"})
+
+class TimesheetModelListView(ListView):
+    model = UserModel
+    template_name = 'scanner/timesheettable.html'
+    context_object_name = 'usermodels'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['time_model'] = Timesheet.objects.all()
+        return context

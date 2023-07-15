@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+<h2 class="mb-4">Employee Profile</h2>
+<form method="POST" enctype="multipart/form-data" action="{% url 'employees:edit' pk=usermodel.pk %}">
+    {% csrf_token %}
+    <div class="row ">
+        <!--Manual Input column-->
+        <div class="col">
+            <div class="bg-secondary rounded h-100 p-1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                {{ form.firstName|add_class:"form-control"|attr:"id:firstName"|attr:"placeholder:John"|attr:"type:text" }}
+                                <label for="{{ form.firstName.id_for_label }}">First Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                {{ form.lastName|add_class:"form-control"|attr:"id:lastName"|attr:"placeholder:Doe"|attr:"type:text" }}
+                                <label for="{{ form.lastName.id_for_label }}">Last Name</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                {{ form.email|add_class:"form-control"|attr:"id:email"|attr:"placeholder:Doe"|attr:"type:email" }}
+                                <label for="{{ form.email.id_for_label }}">Email</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                {{ form.employeeID|add_class:"form-control"|attr:"id:employeeID"|attr:"placeholder:Doe"|attr:"type:number" }}
+                                <label for="{{ form.employeeID.id_for_label }}">Employee ID</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                {{ form.job_title|add_class:"form-control"|attr:"id:job_title"|attr:"placeholder:Doe"|attr:"type:text" }}
+                                <label for="{{ form.job_title.id_for_label }}">Job Title</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                {{ form.phone_number|add_class:"form-control"|attr:"id:phone_number"|attr:"placeholder:Doe"|attr:"type:tel" }}
+                                <label for="{{ form.phone_number.id_for_label }}">Phone Number</label>
+                            </div>
+                        </div>
+                    </div>
+
+                        <!--Date Picker Date Joined-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row mb-3">
+                            <div class="container">
+                                <label for="date_joined">Date Joined</label>
+                                <div class="input-group date">
+                                    {{ form.date_joined|add_class:"form-control" |attr:"id:date_joined" }}
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Date Picker Date Of Birth-->
+                    <div class="col-md-6">
+                        <div class="row mb-3">
+                            <div class="container">
+                                <label for="date_joined">Date Of Birth</label>
+                                <div class="input-group date">
+                                    {{ form.dob|add_class:"form-control" |attr:"id:dob" }}
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            {{ form.address|add_class:"form-control"|attr:"id:address"|attr:"placeholder:Doe"|attr:"type:text" }}
+                            <label for="{{ form.address.id_for_label }}">Address</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            {{ form.emergency_contact|add_class:"form-control"|attr:"id:emergency_contact"|attr:"placeholder:Doe"|attr:"type:tel" }}
+                            <label for="{{ form.emergency_contact.id_for_label }}">Emergency Contact</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            {{ form.contractHours|add_class:"form-control"|attr:"id:contractHours"|attr:"placeholder:Doe"|attr:"type:number" }}
+                            <label for="{{ form.contractHours.id_for_label }}">Contract Hours</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            {{ form.salary|add_class:"form-control"|attr:"id:salary"|attr:"placeholder:Doe"|attr:"type:number" }}
+                            <label for="{{ form.salary.id_for_label }}">Monthly Salary</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row ms-1">
+                    <div class="col-md-6">
+                        <div class="form-check">
+
+                            {{ form.working_status|add_class:"form-check-input"|attr:"id:working_status" | attr:"type:checkbox" }}
+                            <label class="form-check-label" for="{{ form.working_status.id_for_label }}">
+                                Is Active
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check">
+
+                            {{ form.is_security|add_class:"form-check-input"|attr:"id:is_security" | attr:"type:checkbox" }}
+                            <label class="form-check-label" for="{{ form.is_security.id_for_label }}">
+                                Is Security
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="">
+                        <button class="btn btn-lg btn-success m-2" type="submit">Submit Form</button>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+
+        </div>
+        <script>
+            // Set the value of the file input field with the profile image URL
+            {% if form.profileImage.value %}
+              document.getElementById('profileImage').value = "{{ form.profileImage.value.url }}";
+            {% endif %}
+          </script>
+        <!--Profile Pic Column-->
+        <div class="col">
+            <div class="bg-secondary rounded h-100 p-2 avatar mb-2">
+                <div class="text-center">
+                    {% if form.profileImage.value %}
+                        <img src="{{ form.profileImage.value.url }}" class="rounded-lg" width="350" height="350" alt="Avatar" />
+                    {% else %}
+                        <img src="https://tecdn.b-cdn.net/img/new/avatars/5.webp" class="rounded-lg" width="350" height="350" alt="Avatar" />
+                    {% endif %}
+                    <input type="file" name="profileImage" class="form-control mt-2" id="profileImage">
+                </div>
+            </div>
+        </div>
+        <!--QR Code column-->
+        <div class="col">
+            <div class="bg-secondary rounded h-100 p-2 avatar">
+                <div class="text-center">
+                    {% if form.profileImage.value %}
+                    <img src="{{ form.qr_code.value.url }}" class="rounded-lg" width="350" height="350" alt="Avatar" />
+                {% else %}
+                    <img src="https://tecdn.b-cdn.net/img/new/avatars/5.webp" class="rounded-lg" width="350" height="350" alt="Avatar" />
+                {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
