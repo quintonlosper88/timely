@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2 class="mb-4">Employee Table</h2>
+    <div class="">
+        <div class="bg-secondary rounded h-100 p-4">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Employee ID</th>
+                        <th scope="col">Date Joined</th>
+                        <th scope="col">Job Title</th>
+                        <th scope="col">Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usermodel in usermodels %}
+                    <tr>
+                    <td>{{ usermodel.firstName }}</td>
+                    <td>{{ usermodel.lastName }}</td>
+                    <td>{{ usermodel.email }}</td>
+                    <td><a>{{ usermodel.employeeID }}</a></td>
+                    <td>{{ usermodel.date_joined }}</td>
+                    <td>{{ usermodel.job_title }}</td>
+                    <td>{{ usermodel.phone_number }}</td>
+                    <!-- Other table data -->
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
