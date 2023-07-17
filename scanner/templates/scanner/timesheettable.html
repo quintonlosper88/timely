@@ -5,7 +5,10 @@
 <h2 class="mb-4">Employee Timesheet Database</h2>
     <div class="">
         <div class="bg-secondary rounded h-100 p-4">
-
+            <form method="post" action="{% url 'scanner:export_to_csv' %}">
+                {% csrf_token %}
+                <button type="submit">Export to CSV</button>
+            </form>
             <table class="table">
                 <thead>
                     <tr>

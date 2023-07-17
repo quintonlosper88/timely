@@ -8,6 +8,13 @@
     <a href="#" class="sidebar-toggler flex-shrink-0">
         <i class="fa fa-bars"></i>
     </a>
+    <script>
+           // Sidebar Toggler
+    $('.sidebar-toggler').click(function () {
+        $('.sidebar, .content').toggleClass("open");
+        return false;
+    });
+    </script>
     <form class="d-none d-md-flex ms-4">
         <input class="form-control bg-dark border-0" type="search" placeholder="Search">
     </form>

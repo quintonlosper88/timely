@@ -6,6 +6,8 @@ from .models import UserModel,Timesheet
 from django.utils import timezone
 from datetime import datetime
 from django.views.generic import ListView,UpdateView
+from django.http import HttpResponse
+import csv
 # Create your views here.
 def index(request):
     return render(request, 'scanner/index.html')
@@ -83,3 +85,19 @@ class TimesheetModelListView(ListView):
     template_name = 'scanner/timesheettable.html'
     context_object_name = 'time_model'
 
+def export_to_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="timedata.csv"'
+
+    # Fetch data from the database (replace YourModel with your actual model)
+    data = Timesheet.objects.all()
+
+    # Create a CSV writer and write the data to the response
+    writer = csv.writer(response)
+    writer.writerow(['First Name', 'Last Name', 'Employee ID', "Date","Start Time","End Time","Duration"])  # Add field names as column headers
+
+    for item in data:
+        # Replace 'field1', 'field2', 'field3', ... with actual field names of your model
+        writer.writerow([item.user.firstName, item.user.lastName, item.user.employeeID,item.enter_date,item.enter_time,item.leave_time,item.duration ])
+
+    return response

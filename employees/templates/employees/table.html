@@ -3,6 +3,11 @@
 
 {% block content %}
 <h2 class="mb-4">Employee Database</h2>
+    <!-- Your template.html -->
+    <div class="form-floating mb-3">
+        <input type="text" id="inputData" placeholder="Search By First Name">
+        <button id="submitButton">Filter</button>
+    </div>
     <div class="">
         <div class="bg-secondary rounded h-100 p-4">
 
@@ -15,7 +20,7 @@
                         <th scope="col">Employee ID</th>
                         <th scope="col">Date Joined</th>
                         <th scope="col">Job Title</th>
-                        <th scope="col">Phone Number</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -27,7 +32,7 @@
                     <td><a href="{% url 'employees:edit'  pk=usermodel.pk %}">{{ usermodel.employeeID }}</a></td>
                     <td>{{ usermodel.date_joined }}</td>
                     <td>{{ usermodel.job_title }}</td>
-                    <td>{{ usermodel.phone_number }}</td>
+
                     <!-- Other table data -->
                     </tr>
                 {% endfor %}
@@ -35,4 +40,51 @@
             </table>
         </div>
     </div>
+
+    <div id="messageContainer"></div>
+
+    <script>
+        $(document).ready(function() {
+            $("#submitButton").on("click", function() {
+                var inputData = $("#inputData").val();
+                $.ajax({
+                    url: '{% url "employees:filternames" %}',  // URL of the Django view
+                    type: "POST",
+                    data: {input_data: inputData},
+                    dataType: "json",
+                    success: function(data) {
+                        // Update the table with the filtered data
+                        var tbody = $(".table tbody");
+                        tbody.empty();  // Clear existing table rows
+
+                        for (var i = 0; i < data.firstName.length; i++) {
+                            var firstName = data.firstName[i];
+                            var lastName = data.lastName[i];
+                            var email = data.email[i];
+                            var employeeID = data.employeeID[i];
+                            var date_joined = data.date_joined[i];
+                            var job_title = data.job_title[i];
+                            var row = `<tr>
+                                <td>${firstName}</td>
+                                <td>${lastName}</td>
+                                <td>${email}</td>
+                                <td>${employeeID}</td>
+                                <td>${date_joined}</td>
+                                <td>${job_title}</td>
+
+                                <!-- Add other fields here -->
+                            </tr>`;
+                            tbody.append(row);
+                        }
+
+                        $("#messageContainer").text("Data received successfully");
+                    },
+                    error: function(error) {
+                        console.log("An error occurred:", error);
+                    }
+                });
+            });
+        });
+    </script>
+
 {% endblock %}

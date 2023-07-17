@@ -6,13 +6,11 @@ from .forms import UserForm
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView,UpdateView
 from django.urls import reverse_lazy
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 def index(request):
     return render(request, 'employees/index.html')
-
-# def userTableView(request):
-#     template = 'employees/table.html'
-#     contx = {}
-#     return render(request, template, contx)
 
 class UserModelListView(ListView):
     model = UserModel
@@ -52,3 +50,58 @@ class UserCreateView(CreateView):
         # You can perform additional actions here if needed
 
         return super().form_valid(form)
+
+class CustomFilteredListView(ListView):
+    print("customerfilterclassed called")
+    model = UserModel
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        filter_value = self.request.GET.get('filter_param')
+
+        if filter_value:
+            queryset = queryset.filter(some_field=filter_value)
+            print(queryset)
+
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        # Check if the request is an AJAX request
+        if request.is_ajax():
+            queryset = self.get_queryset()
+            print('AJAX Queryset ' + queryset)
+            # Convert the filtered queryset to a list of dictionaries
+            data = list(queryset.values())
+
+            # Return the filtered data as JSON response
+            return JsonResponse(data, safe=False)
+
+        # For non-AJAX requests, fall back to the default behavior of the view
+        return super().get(request, *args, **kwargs)
+@csrf_exempt
+def employeeFilterView(request):
+    if request.method == 'POST':
+        data = request.POST.get('input_data')
+        filtered_users = UserModel.objects.filter(firstName__startswith=data)
+
+        # Accessing the firstName field for each object in the queryset
+        firstName = [user.firstName for user in filtered_users]
+        lastName = [user.lastName for user in filtered_users]
+        email = [user.email for user in filtered_users]
+        employeeID = [user.employeeID for user in filtered_users]
+        date_joined = [user.date_joined for user in filtered_users]
+        job_title = [user.job_title for user in filtered_users]
+
+        # Return the filtered data as JSON response
+        response_data = {'firstName': firstName,
+                         'lastName':lastName,
+                         'email':email,
+                         'employeeID':employeeID,
+                         'date_joined':date_joined,
+                         'job_title':job_title
+                         }
+        return JsonResponse(response_data)
+    else:
+        # Handle other HTTP methods (GET, PUT, DELETE) if needed
+        return JsonResponse({'error': 'Invalid method'})
+
