@@ -8,7 +8,8 @@ from django.views.generic import ListView,UpdateView
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from django.http import HttpResponse
+import csv
 def index(request):
     return render(request, 'employees/index.html')
 
@@ -105,3 +106,20 @@ def employeeFilterView(request):
         # Handle other HTTP methods (GET, PUT, DELETE) if needed
         return JsonResponse({'error': 'Invalid method'})
 
+def export_to_csv(request):
+    print('export to csv function called')
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="employeedata.csv"'
+
+    # Fetch data from the database (replace YourModel with your actual model)
+    data = UserModel.objects.all()
+
+    # Create a CSV writer and write the data to the response
+    writer = csv.writer(response)
+    writer.writerow(['First Name', 'Last Name', 'Employee ID', "Job Title","Currently Employeed","Date Joined"])  # Add field names as column headers
+
+    for item in data:
+        # Replace 'field1', 'field2', 'field3', ... with actual field names of your model
+        writer.writerow([item.firstName, item.lastName, item.employeeID,item.job_title,item.working_status,item.date_joined ])
+
+    return response

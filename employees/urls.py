@@ -10,6 +10,8 @@ urlpatterns = [
     path('edit/<int:pk>/',views.UserModelUpdateView.as_view(), name='edit'),
     path('filtered-data/', views.CustomFilteredListView.as_view(), name='filtered_data'),
     path('filternames/', views.employeeFilterView, name='filternames'),
+    path('export/', views.export_to_csv, name='export_to_csv'),
+
 
     # More paths related to this app...
 ]

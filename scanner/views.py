@@ -8,6 +8,8 @@ from datetime import datetime
 from django.views.generic import ListView,UpdateView
 from django.http import HttpResponse
 import csv
+from django.db.models import Sum,Count
+
 # Create your views here.
 def index(request):
     return render(request, 'scanner/index.html')
@@ -101,3 +103,14 @@ def export_to_csv(request):
         writer.writerow([item.user.firstName, item.user.lastName, item.user.employeeID,item.enter_date,item.enter_time,item.leave_time,item.duration ])
 
     return response
+
+def report(request):
+    user_total_hours_per_month = Timesheet.objects.filter(
+        enter_date__year=timezone.now().year,
+        enter_date__month=timezone.now().month,
+    ).values('user__employeeID', 'user__firstName', 'user__lastName').annotate(
+        total_hours=Sum('duration'),
+        clockings_count=Count('user')
+    )
+    template_name = "employees/report.html"
+    return render(request,template_name,{'user_total_hours_per_month':user_total_hours_per_month})

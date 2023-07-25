@@ -9,5 +9,6 @@ urlpatterns = [
     path("user/",views.userscannedView,name="userscanned"),
     path('timesheets/',views.TimesheetModelListView.as_view(),name="timesheets"),
     path('export/', views.export_to_csv, name='export_to_csv'),
+    path('report/', views.report, name="report")
     # More paths related to this app...
 ]
